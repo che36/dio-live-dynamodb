@@ -125,4 +125,11 @@ aws dynamodb query \
   --artistid#countrycode#style
 - sort key 
   --song_title
-  ```
+
+```
+- randomizando a chave de partição, que produzirá melhor paralelismo e maior rendimento geral.
+- índice secundário global
+  --MusicTitleIndex
+SHARDS = 10
+newitem['MusicTitleIndex_1_artistid#countrycode#style'] = "shard#{}".format((newitem['requestid'] % SHARDS) + 1)
+newitem['MusicTitleIndex_1_song_title'] = row[7] + "#" + row[2] + "#" + row[3]
